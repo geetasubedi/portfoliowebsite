@@ -20,7 +20,7 @@ const SectionTitle = ({ title, subtitle }: { title: string; subtitle?: string })
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter text-brand-text mb-4"
+      className="text-5xl md:text-7xl font-serif font-normal uppercase tracking-tighter text-brand-text mb-4"
     >
       {title}
     </motion.h2>
@@ -30,7 +30,7 @@ const SectionTitle = ({ title, subtitle }: { title: string; subtitle?: string })
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.1 }}
-        className="text-xl font-light italic font-serif text-brand-text/60 max-w-2xl"
+        className="text-xl font-normal font-serif text-brand-text/60 max-w-2xl"
       >
         {subtitle}
       </motion.p>
@@ -43,6 +43,7 @@ const Header = () => {
     { name: "About", id: "about" },
     { name: "Services", id: "services" },
     { name: "Articles", id: "articles" },
+    { name: "Experiences", id: "experiences" },
     { name: "Contact", id: "contact", primary: true },
   ];
 
@@ -54,14 +55,14 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 h-20 md:h-24 px-6 md:px-12 flex items-center justify-between z-[100] bg-brand-bg/80 backdrop-blur-md border-b border-brand-text/10">
       <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-brand-text rounded-full flex items-center justify-center text-white font-black text-xs">GS</div>
-        <span className="font-serif font-black uppercase tracking-tight text-lg hidden sm:inline">Gita Subedi</span>
+        <div className="w-8 h-8 bg-brand-text rounded-full flex items-center justify-center text-white font-normal text-xs">GS</div>
+        <span className="font-serif font-normal uppercase tracking-tight text-lg hidden sm:inline">Gita Subedi</span>
       </div>
 
       <nav className="flex items-center gap-2 md:gap-4">
         <button
           onClick={() => scrollTo("experiences")}
-          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-[10px] font-black uppercase tracking-widest shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-[10px] font-normal uppercase tracking-widest shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
         >
           Journey
         </button>
@@ -70,7 +71,7 @@ const Header = () => {
             key={item.id}
             onClick={() => scrollTo(item.id)}
             className={`
-              hidden md:flex px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all
+              hidden md:flex px-4 py-2 rounded-xl text-[10px] font-normal uppercase tracking-widest transition-all
               ${item.primary 
                 ? 'bg-brand-accent text-white shadow-[3px_3px_0px_0px_#121212] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none' 
                 : 'bg-white border-2 border-brand-text text-brand-text shadow-[3px_3px_0px_0px_#121212] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none'}
@@ -83,7 +84,6 @@ const Header = () => {
     </header>
   );
 };
-
 export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -119,7 +119,7 @@ export default function App() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "circOut" }}
-              className="text-[15vw] lg:text-[180px] leading-[0.8] font-serif font-black uppercase tracking-tighter mb-8"
+              className="text-[15vw] lg:text-[180px] leading-[0.8] font-serif font-normal uppercase tracking-tighter mb-8"
             >
               <span className="text-brand-accent">GITA</span> <br/>
               <span className="text-brand-text">SUBEDI</span>
@@ -129,7 +129,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="text-2xl md:text-3xl max-w-3xl font-light leading-relaxed text-brand-text/80"
+              className="text-2xl md:text-3xl max-w-3xl font-normal leading-relaxed text-brand-text/80"
             >
               {DATA.bio}
             </motion.p>
@@ -143,7 +143,7 @@ export default function App() {
           >
             <button 
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group px-8 py-4 bg-brand-text text-white rounded-full font-bold flex items-center gap-2 hover:bg-brand-accent transition-all active:scale-95 text-xs uppercase tracking-widest"
+              className="group px-8 py-4 bg-brand-text text-white rounded-full font-normal flex items-center gap-2 hover:bg-brand-accent transition-all active:scale-95 text-xs uppercase tracking-widest"
             >
               Start Project
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -164,25 +164,25 @@ export default function App() {
             >
               <div className="flex flex-col items-center justify-center gap-4 text-brand-text/35 transition-all duration-700 group-hover:scale-105">
                 <Image className="w-16 h-16" strokeWidth={1.5} aria-hidden="true" />
-                <span className="text-xs font-bold uppercase tracking-[0.35em]">Image Placeholder</span>
+                <span className="text-xs font-normal uppercase tracking-[0.35em]">Image Placeholder</span>
               </div>
               <div className="absolute inset-0 bg-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.div>
             <div className="space-y-12">
-              <p className="text-3xl md:text-4xl font-serif italic font-light text-brand-text leading-tight">
+              <p className="text-3xl md:text-4xl font-serif font-normal text-brand-text leading-tight">
                 "Bridging human resilience with inclusive systems to drive meaningful change."
               </p>
-              <p className="text-xl text-brand-text/70 leading-relaxed font-light">
+              <p className="text-xl text-brand-text/70 leading-relaxed font-normal">
                 {DATA.about}
               </p>
               <div className="grid grid-cols-2 gap-12 border-t border-brand-text/10 pt-12">
                 <div>
-                  <h4 className="font-serif font-black text-5xl text-brand-accent">10+</h4>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] mt-2 opacity-50">Years Sector Experience</p>
+                  <h4 className="font-serif font-normal text-5xl text-brand-accent">10+</h4>
+                  <p className="text-xs font-normal uppercase tracking-[0.2em] mt-2 opacity-50">Years Sector Experience</p>
                 </div>
                 <div>
-                  <h4 className="font-serif font-black text-5xl text-brand-accent">50+</h4>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] mt-2 opacity-50">Research Initiatives</p>
+                  <h4 className="font-serif font-normal text-5xl text-brand-accent">50+</h4>
+                  <p className="text-xs font-normal uppercase tracking-[0.2em] mt-2 opacity-50">Research Initiatives</p>
                 </div>
               </div>
             </div>
@@ -220,11 +220,11 @@ export default function App() {
                 className="group flex flex-col md:flex-row md:items-center justify-between p-10 bg-white border-2 border-brand-text rounded-3xl hover:bg-brand-accent hover:text-white transition-all shadow-[8px_8px_0px_0px_#121212]"
               >
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-3 block group-hover:text-white/60">0{i + 1} - {article.date}</span>
-                  <h3 className="text-3xl font-serif font-black uppercase tracking-tight">{article.title}</h3>
+                  <span className="text-[10px] font-normal uppercase tracking-[0.3em] opacity-40 mb-3 block group-hover:text-white/60">0{i + 1} - {article.date}</span>
+                  <h3 className="text-3xl font-serif font-normal uppercase tracking-tight">{article.title}</h3>
                 </div>
                 <div className="mt-8 md:mt-0 flex items-center gap-4">
-                   <span className="text-xs font-bold uppercase tracking-widest opacity-60">{article.readTime}</span>
+                   <span className="text-xs font-normal uppercase tracking-widest opacity-60">{article.readTime}</span>
                    <div className="w-12 h-12 rounded-full border border-current flex items-center justify-center group-hover:bg-white group-hover:text-brand-accent transition-all">
                       <ArrowRight className="-rotate-45" />
                    </div>
@@ -250,13 +250,13 @@ export default function App() {
                 className="group relative flex gap-12 p-10 bg-white border-2 border-brand-text rounded-[40px] hover:shadow-[12px_12px_0px_0px_#E63946] transition-all"
               >
                 <div className="flex-grow">
-                  <h3 className="text-3xl font-serif font-black uppercase text-brand-text mb-2 tracking-tight">{exp.role}</h3>
+                  <h3 className="text-3xl font-serif font-normal uppercase text-brand-text mb-2 tracking-tight">{exp.role}</h3>
                   <div className="flex items-center gap-4 mb-6">
-                    <span className="text-sm font-bold uppercase tracking-widest text-brand-accent">{exp.company}</span>
+                    <span className="text-sm font-normal uppercase tracking-widest text-brand-accent">{exp.company}</span>
                     <span className="h-[1px] w-8 bg-brand-text/20"></span>
-                    <span className="text-xs font-bold text-brand-text/40">{exp.period}</span>
+                    <span className="text-xs font-normal text-brand-text/40">{exp.period}</span>
                   </div>
-                  <p className="text-xl text-brand-text/60 font-light max-w-3xl border-l-2 border-brand-accent/30 pl-6">
+                  <p className="text-xl text-brand-text/60 font-normal max-w-3xl border-l-2 border-brand-accent/30 pl-6">
                     {exp.description}
                   </p>
                 </div>
@@ -266,11 +266,11 @@ export default function App() {
         </section>
 
         {/* CONTACT SECTION */}
-        <section id="contact" className="py-32 mb-40 border-t border-brand-text/10">
+        <section id="contact" className="py-20 md:py-24 mb-8 md:mb-12 border-t border-brand-text/10">
           <div className="text-center">
-            <h2 className="text-[10vw] lg:text-[140px] font-serif font-black uppercase leading-[0.8] tracking-tighter mb-16">
+            <h2 className="text-[10vw] lg:text-[120px] font-serif font-normal uppercase leading-[0.9] tracking-tighter mb-10">
               Let's Talk <br />
-              <span className="italic font-normal">Impact.</span>
+              <span className="font-normal">Impact.</span>
             </h2>
             
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
@@ -278,14 +278,14 @@ export default function App() {
                 href={`mailto:${DATA.contact.email}`}
                 className="group relative inline-flex max-w-full items-center gap-4 md:gap-6 px-6 md:px-12 py-6 md:py-8 bg-brand-text text-white rounded-[32px] overflow-hidden transition-all shadow-[8px_8px_0px_0px_#E63946] active:shadow-none translate-y-0 active:translate-x-[4px] active:translate-y-[4px]"
               >
-                <span className="min-w-0 break-all text-lg sm:text-2xl md:text-4xl font-serif font-black lowercase tracking-tight">{DATA.contact.email}</span>
+                <span className="min-w-0 break-all text-lg sm:text-2xl md:text-4xl font-serif font-normal lowercase tracking-tight">{DATA.contact.email}</span>
                 <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-brand-accent transition-colors">
                   <Mail className="w-6 h-6" />
                 </div>
               </a>
             </div>
 
-            <div className="mt-16 flex flex-wrap items-center justify-center gap-4 md:gap-6">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4 md:gap-6">
                {[
                  { name: "LinkedIn", href: DATA.contact.linkedin, mark: "icon" },
                  { name: "Facebook", href: DATA.contact.facebook, mark: "f" },
@@ -303,9 +303,9 @@ export default function App() {
                    className="group flex min-w-[160px] items-center gap-3 rounded-2xl border-2 border-brand-text bg-white px-5 py-4 text-left shadow-[4px_4px_0px_0px_#121212] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
                  >
                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-text text-white group-hover:bg-white group-hover:text-brand-accent transition-colors">
-                     {social.mark === "icon" ? <Linkedin className="h-5 w-5" /> : <span className="text-sm font-black normal-case tracking-normal">{social.mark}</span>}
+                     {social.mark === "icon" ? <Linkedin className="h-5 w-5" /> : <span className="text-sm font-normal normal-case tracking-normal">{social.mark}</span>}
                    </span>
-                   <span className="text-xs font-black uppercase tracking-[0.18em]">{social.name}</span>
+                   <span className="text-xs font-normal uppercase tracking-[0.18em]">{social.name}</span>
                  </a>
                ))}
             </div>
@@ -313,7 +313,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="py-12 px-12 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-text/40">
+      <footer className="py-8 px-6 md:px-12 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-normal uppercase tracking-[0.2em] text-brand-text/40">
         <p>&copy; {new Date().getFullYear()} Gita Subedi Portfolio</p>
         <p>Advocate for Education Policy Reform | Educational Practitioner for GEDSI</p>
       </footer>
@@ -341,8 +341,8 @@ const ServiceCard = ({ service, index }: any) => {
       <div className="w-16 h-16 rounded-2xl bg-brand-bg flex items-center justify-center mb-12 border-2 border-brand-text group-hover:bg-brand-accent group-hover:text-white transition-colors">
         <Icon className="w-8 h-8" />
       </div>
-      <h3 className="text-2xl font-serif font-black uppercase tracking-tight text-brand-text mb-4 leading-none">{service.title}</h3>
-      <p className="text-brand-text/60 text-sm leading-relaxed font-light">{service.description}</p>
+      <h3 className="text-2xl font-serif font-normal uppercase tracking-tight text-brand-text mb-4 leading-none">{service.title}</h3>
+      <p className="text-brand-text/60 text-sm leading-relaxed font-normal">{service.description}</p>
     </motion.div>
   );
 };
