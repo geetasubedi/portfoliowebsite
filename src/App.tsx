@@ -70,7 +70,7 @@ const Header = () => {
         <button
           type="button"
           onClick={() => scrollTo("experiences")}
-          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-[10px] font-normal uppercase tracking-widest shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-xs md:text-sm font-normal uppercase tracking-wider shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
         >
           Journey
         </button>
@@ -80,7 +80,7 @@ const Header = () => {
             key={item.id}
             onClick={() => scrollTo(item.id)}
             className={`
-              hidden md:flex px-4 py-2 rounded-xl text-[10px] font-normal uppercase tracking-widest transition-all
+              hidden md:flex px-4 py-2 rounded-xl text-sm font-normal uppercase tracking-wider transition-all
               ${item.primary 
                 ? 'bg-brand-accent text-white shadow-[3px_3px_0px_0px_#121212] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none' 
                 : 'bg-white border-2 border-brand-text text-brand-text shadow-[3px_3px_0px_0px_#121212] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none'}
@@ -125,7 +125,7 @@ export default function App() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "circOut" }}
-              className="text-[15vw] lg:text-[180px] leading-[0.8] font-serif font-normal uppercase tracking-tighter mb-8"
+              className="text-[15vw] lg:text-[180px] leading-[0.82] font-serif font-bold uppercase tracking-tight mb-8"
             >
               <span className="text-brand-accent">GITA</span> <br/>
               <span className="text-brand-text">SUBEDI</span>
