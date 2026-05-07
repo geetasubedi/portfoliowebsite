@@ -16,3 +16,26 @@
   --color-brand-text: #121212;
   --color-brand-accent: #E63946;
 }
+
+.journey-surface {
+  background:
+    linear-gradient(135deg, rgba(195, 154, 91, 0.16), transparent 28%),
+    linear-gradient(315deg, rgba(230, 57, 70, 0.1), transparent 30%),
+    #F9F8F6;
+}
+
+.journey-picture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0 38%, rgba(255, 255, 255, 0.42) 45%, transparent 54%),
+    repeating-linear-gradient(90deg, rgba(18, 18, 18, 0.045) 0 1px, transparent 1px 18px);
+  opacity: 0.75;
+  pointer-events: none;
+  transition: transform 700ms ease;
+}
+
+.journey-picture:hover::after {
+  transform: translateX(28px);
+}

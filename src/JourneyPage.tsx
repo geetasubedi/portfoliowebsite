@@ -10,117 +10,134 @@ const JOURNEY_CARDS = [
   "Impact Chapter",
 ];
 
+const CARD_TONES = [
+  "from-[#F9F8F6] via-[#F3E6D0] to-[#E63946]/15",
+  "from-[#121212]/10 via-[#F9F8F6] to-[#C39A5B]/30",
+  "from-[#F9F8F6] via-[#E63946]/10 to-[#121212]/10",
+  "from-[#C39A5B]/25 via-[#F9F8F6] to-[#E63946]/10",
+  "from-[#F9F8F6] via-[#121212]/10 to-[#C39A5B]/25",
+  "from-[#E63946]/15 via-[#F9F8F6] to-[#121212]/10",
+];
+
 const cardVariants = {
-  hidden: { opacity: 0, y: 34, scale: 0.96 },
+  hidden: { opacity: 0, y: 38, scale: 0.97 },
   visible: { opacity: 1, y: 0, scale: 1 },
 } as const;
 
 export default function JourneyPage() {
   return (
-    <main id="main-content" className="relative z-10 mx-auto max-w-7xl px-6 pt-32 md:pt-40">
-      <section className="min-h-[58vh] border-b border-brand-text/10 pb-20">
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="mb-6 text-xl uppercase tracking-wider text-brand-accent"
-        >
-          Gita Subedi
-        </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "circOut" }}
-          className="font-serif text-[18vw] font-bold uppercase leading-[0.82] tracking-tight text-brand-text md:text-[120px] lg:text-[170px]"
-        >
-          Journey
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.16, duration: 0.5 }}
-          className="mt-10 max-w-3xl text-2xl leading-relaxed text-brand-text/70 md:text-3xl"
-        >
-          A visual walkthrough for the milestones, roles, and moments that shaped the work. Years and detailed stories can drop into this path cleanly later.
-        </motion.p>
-      </section>
+    <main id="main-content" className="journey-surface relative z-10 overflow-hidden px-6 pt-28 md:pt-32">
+      <section aria-label="Journey walkthrough" className="relative mx-auto max-w-7xl pb-24 md:pb-32">
+        <JourneyBackground />
 
-      <section aria-label="Journey walkthrough" className="relative py-24 md:py-32">
-        <div className="absolute bottom-20 left-5 top-28 w-1 rounded-full bg-brand-accent/40 md:hidden" />
-        <div className="absolute bottom-32 left-1/2 top-36 hidden w-px -translate-x-1/2 bg-brand-text/10 md:block" />
+        <div className="relative z-10 flex flex-col gap-14 md:gap-4">
+          {JOURNEY_CARDS.map((title, index) => {
+            const isRight = index % 2 === 0;
 
-        {JOURNEY_CARDS.map((title, index) => {
-          const isRight = index % 2 === 0;
-          const isLast = index === JOURNEY_CARDS.length - 1;
-
-          return (
-            <div key={title} className="relative min-h-[430px] md:min-h-[520px]">
-              <motion.article
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.55, delay: 0.05 }}
-                whileHover={{ y: -8, rotate: 0 }}
-                className={`
-                  relative ml-10 w-[calc(100%-2.5rem)] rounded-[32px] border-2 border-brand-text bg-white p-6 shadow-[10px_10px_0px_0px_#121212] transition-all md:w-[44vw] md:max-w-[520px] md:p-9
-                  ${isRight ? "md:ml-auto md:rotate-[1deg]" : "md:mr-auto md:-rotate-[1deg]"}
-                `}
+            return (
+              <div
+                key={title}
+                className={`relative flex min-h-[520px] items-start md:min-h-[580px] ${
+                  isRight ? "justify-end" : "justify-start"
+                }`}
               >
-                <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-[24px] border-2 border-dashed border-brand-text/40 bg-brand-bg">
-                  <div className="absolute inset-4 rounded-[18px] border border-brand-accent/25" />
-                  <span className="font-serif text-4xl font-bold uppercase tracking-tight text-brand-text/20 md:text-6xl">
-                    GS
-                  </span>
-                  <span className="absolute bottom-6 left-6 right-6 text-center text-xl uppercase tracking-wider text-brand-text/55">
-                    Placeholder
-                  </span>
-                </div>
+                <motion.article
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.28 }}
+                  transition={{ duration: 0.56, ease: "easeOut" }}
+                  whileHover={{ y: -10, rotate: 0 }}
+                  className={`
+                    group relative w-full overflow-hidden rounded-[34px] border-2 border-brand-text bg-white p-4 shadow-[12px_12px_0px_0px_#121212] transition-all md:w-[46vw] md:max-w-[590px]
+                    ${isRight ? "md:rotate-[1deg]" : "md:-rotate-[1deg]"}
+                  `}
+                >
+                  <div className={`journey-picture relative flex aspect-[1.25/1] items-center justify-center overflow-hidden rounded-[26px] bg-gradient-to-br ${CARD_TONES[index]}`}>
+                    <span className="absolute left-6 top-5 z-10 rounded-full bg-white/70 px-5 py-2 text-lg uppercase tracking-wider text-brand-text/60 backdrop-blur-sm">
+                      Placeholder
+                    </span>
+                    <span className="relative z-10 font-serif text-[26vw] font-bold uppercase leading-none tracking-tight text-brand-text/10 md:text-[145px]">
+                      GS
+                    </span>
+                    <div className="absolute inset-x-6 bottom-6 z-10 flex items-center justify-between border-t border-brand-text/10 pt-5 text-brand-text/55">
+                      <span className="text-xl uppercase tracking-wider">Image Area</span>
+                      <span className="text-xl">{String(index + 1).padStart(2, "0")}</span>
+                    </div>
+                  </div>
 
-                <div className="mt-8 flex items-center justify-between gap-6">
-                  <h2 className="font-serif text-3xl uppercase leading-none tracking-tight text-brand-text md:text-4xl">
-                    {title}
-                  </h2>
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-brand-accent bg-brand-bg text-xl text-brand-accent">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
+                  <div className="px-2 pb-3 pt-7 md:px-4">
+                    <div className="flex items-center justify-between gap-6">
+                      <h2 className="font-serif text-4xl uppercase leading-none tracking-tight text-brand-text md:text-5xl">
+                        {title}
+                      </h2>
+                      <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-brand-accent bg-brand-bg text-2xl text-brand-accent transition-colors group-hover:bg-brand-accent group-hover:text-white">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
 
-                <div className="mt-6 flex items-center gap-3 border-t border-brand-text/10 pt-6 text-lg text-brand-text/65">
-                  <span>Reserved for year, role, story, and impact.</span>
-                  <ArrowRight className="h-5 w-5 shrink-0 text-brand-accent" aria-hidden="true" />
-                </div>
-              </motion.article>
-
-              {!isLast && <JourneyRope direction={isRight ? "right-to-left" : "left-to-right"} />}
-            </div>
-          );
-        })}
+                    <div className="mt-6 flex items-center gap-4 border-t border-brand-text/10 pt-6 text-xl leading-relaxed text-brand-text/65">
+                      <span>Reserved for year, role, story, and impact.</span>
+                      <ArrowRight className="h-6 w-6 shrink-0 text-brand-accent" aria-hidden="true" />
+                    </div>
+                  </div>
+                </motion.article>
+              </div>
+            );
+          })}
+        </div>
       </section>
     </main>
   );
 }
 
-const JourneyRope = ({ direction }: { direction: "right-to-left" | "left-to-right" }) => {
-  const path =
-    direction === "right-to-left"
-      ? "M 840 12 C 835 120 370 118 360 250"
-      : "M 360 12 C 365 120 830 118 840 250";
-
-  const startX = direction === "right-to-left" ? 840 : 360;
-  const endX = direction === "right-to-left" ? 360 : 840;
-
-  return (
+const JourneyBackground = () => (
+  <>
+    <div className="pointer-events-none absolute inset-y-0 left-1/2 z-0 hidden w-px -translate-x-1/2 bg-brand-text/10 md:block" />
     <svg
-      className="pointer-events-none absolute left-1/2 top-[310px] hidden h-[270px] w-[1200px] -translate-x-1/2 md:block"
-      viewBox="0 0 1200 270"
+      className="pointer-events-none absolute left-1/2 top-0 z-0 hidden h-full w-[1240px] -translate-x-1/2 md:block"
+      viewBox="0 0 1240 3560"
+      preserveAspectRatio="xMidYMin meet"
       fill="none"
       aria-hidden="true"
     >
-      <path d={path} stroke="#C39A5B" strokeWidth="14" strokeLinecap="round" />
-      <path d={path} stroke="#121212" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 24" opacity="0.55" />
-      <circle cx={startX} cy="12" r="17" fill="#F9F8F6" stroke="#121212" strokeWidth="4" />
-      <circle cx={endX} cy="250" r="17" fill="#F9F8F6" stroke="#E63946" strokeWidth="4" />
+      <path
+        d="M870 90 C1070 250 1060 450 870 585 C650 740 500 650 340 805 C130 1010 150 1220 360 1350 C580 1485 730 1390 890 1570 C1080 1785 1055 1995 850 2135 C650 2272 500 2195 345 2360 C135 2585 160 2810 375 2940 C590 3070 740 2975 885 3170 C980 3300 980 3430 895 3530"
+        stroke="#C39A5B"
+        strokeWidth="18"
+        strokeLinecap="round"
+      />
+      <path
+        d="M870 90 C1070 250 1060 450 870 585 C650 740 500 650 340 805 C130 1010 150 1220 360 1350 C580 1485 730 1390 890 1570 C1080 1785 1055 1995 850 2135 C650 2272 500 2195 345 2360 C135 2585 160 2810 375 2940 C590 3070 740 2975 885 3170 C980 3300 980 3430 895 3530"
+        stroke="#121212"
+        strokeWidth="4"
+        strokeDasharray="2 28"
+        strokeLinecap="round"
+        opacity="0.42"
+      />
     </svg>
-  );
-};
+    <svg
+      className="pointer-events-none absolute bottom-10 left-5 top-4 z-0 w-12 md:hidden"
+      viewBox="0 0 48 2800"
+      preserveAspectRatio="none"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M24 0 C42 220 6 420 24 640 C42 860 6 1060 24 1280 C42 1500 6 1700 24 1920 C42 2140 6 2340 24 2560 C32 2660 18 2740 24 2800"
+        stroke="#C39A5B"
+        strokeWidth="12"
+        strokeLinecap="round"
+      />
+      <path
+        d="M24 0 C42 220 6 420 24 640 C42 860 6 1060 24 1280 C42 1500 6 1700 24 1920 C42 2140 6 2340 24 2560 C32 2660 18 2740 24 2800"
+        stroke="#121212"
+        strokeWidth="3"
+        strokeDasharray="2 24"
+        strokeLinecap="round"
+        opacity="0.4"
+      />
+    </svg>
+    <div className="pointer-events-none absolute inset-0 z-0 opacity-70 [background-image:linear-gradient(90deg,rgba(18,18,18,0.055)_1px,transparent_1px),linear-gradient(0deg,rgba(230,57,70,0.045)_1px,transparent_1px)] [background-size:220px_100%,100%_150px]" />
+  </>
+);
