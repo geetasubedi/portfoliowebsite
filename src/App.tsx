@@ -23,7 +23,8 @@ import {
   ChevronDown,
   Monitor,
   Sparkles,
-  MousePointer2
+  MousePointer2,
+  Image
 } from "lucide-react";
 import { DATA } from "./constants";
 
@@ -172,13 +173,12 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-text/5 group border-2 border-brand-text"
+              className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-text/5 group border-2 border-brand-text flex items-center justify-center"
             >
-              <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop" 
-                alt={DATA.name}
-                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105"
-              />
+              <div className="flex flex-col items-center justify-center gap-4 text-brand-text/35 transition-all duration-700 group-hover:scale-105">
+                <Image className="w-16 h-16" strokeWidth={1.5} aria-hidden="true" />
+                <span className="text-xs font-bold uppercase tracking-[0.35em]">Image Placeholder</span>
+              </div>
               <div className="absolute inset-0 bg-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.div>
             <div className="space-y-12">
@@ -365,4 +365,3 @@ const CustomCursor = () => {
     </motion.div>
   );
 };
-
