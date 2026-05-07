@@ -1,0 +1,4 @@
+Contact: mailto:get2gita@hotmail.com
+Preferred-Languages: en
+Canonical: https://gitasubedi.vercel.app/.well-known/security.txt
+Expires: 2027-05-07T00:00:00Z

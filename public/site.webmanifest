@@ -1,0 +1,18 @@
+{
+  "name": "Gita Subedi Portfolio",
+  "short_name": "GS",
+  "description": "Portfolio of Gita Subedi, GEDSI education policy and psychosocial research professional in Nepal.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F9F8F6",
+  "theme_color": "#E63946",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

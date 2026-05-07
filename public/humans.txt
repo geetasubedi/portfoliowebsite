@@ -1,0 +1,11 @@
+/* TEAM */
+Name: Gita Subedi
+Role: Advocate for Education Policy Reform and Educational Practitioner for GEDSI
+Location: Kathmandu, Nepal
+Contact: get2gita@hotmail.com
+LinkedIn: https://www.linkedin.com/in/gita-subedi-36bb49a9/
+
+/* SITE */
+Language: English
+Stack: React, Vite, Tailwind CSS
+Focus: Education policy reform, GEDSI, psychosocial counseling, qualitative research, social impact communication

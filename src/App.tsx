@@ -9,7 +9,7 @@ import {
   Mail, 
   ArrowRight,
   Sparkles,
-  Image
+  BadgeCheck
 } from "lucide-react";
 import { DATA } from "./constants";
 
@@ -54,13 +54,21 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 h-20 md:h-24 px-6 md:px-12 flex items-center justify-between z-[100] bg-brand-bg/80 backdrop-blur-md border-b border-brand-text/10">
-      <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 bg-brand-text rounded-full flex items-center justify-center text-white font-normal text-xs">GS</div>
+      <button
+        type="button"
+        onClick={() => scrollTo("home")}
+        aria-label="Gita Subedi home"
+        className="flex items-center space-x-3 group"
+      >
+        <span className="w-10 h-10 bg-brand-text rounded-xl border-2 border-brand-text shadow-[3px_3px_0px_0px_#E63946] flex items-center justify-center text-white font-serif text-sm uppercase tracking-tight transition-all group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none">
+          GS
+        </span>
         <span className="font-serif font-normal uppercase tracking-tight text-lg hidden sm:inline">Gita Subedi</span>
-      </div>
+      </button>
 
-      <nav className="flex items-center gap-2 md:gap-4">
+      <nav className="flex items-center gap-2 md:gap-4" aria-label="Primary navigation">
         <button
+          type="button"
           onClick={() => scrollTo("experiences")}
           className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-[10px] font-normal uppercase tracking-widest shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
         >
@@ -68,6 +76,7 @@ const Header = () => {
         </button>
         {navItems.map((item) => (
           <button
+            type="button"
             key={item.id}
             onClick={() => scrollTo(item.id)}
             className={`
@@ -106,12 +115,13 @@ export default function App() {
         <CustomCursor />
       </div>
 
-      <main className="max-w-6xl mx-auto px-6 relative z-10">
+      <main id="main-content" className="max-w-6xl mx-auto px-6 relative z-10">
         {/* HERO SECTION */}
-        <section className="min-h-screen flex flex-col justify-center items-start pt-20 relative">
+        <section id="home" aria-labelledby="hero-title" className="min-h-screen flex flex-col justify-center items-start pt-20 relative">
 
           <header className="mb-12">
             <motion.h1 
+              id="hero-title"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "circOut" }}
@@ -138,6 +148,7 @@ export default function App() {
             className="flex flex-wrap gap-4"
           >
             <button 
+              type="button"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-8 py-4 bg-brand-text text-white rounded-full font-normal flex items-center gap-2 hover:bg-brand-accent transition-all active:scale-95 text-xs uppercase tracking-widest"
             >
@@ -156,13 +167,16 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-text/5 group border-2 border-brand-text flex items-center justify-center"
+              className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-brand-text group border-2 border-brand-text flex items-center justify-center shadow-[10px_10px_0px_0px_#E63946]"
+              role="img"
+              aria-label="GS monogram for Gita Subedi"
             >
-              <div className="flex flex-col items-center justify-center gap-4 text-brand-text/35 transition-all duration-700 group-hover:scale-105">
-                <Image className="w-16 h-16" strokeWidth={1.5} aria-hidden="true" />
-                <span className="text-xs font-normal uppercase tracking-[0.35em]">Image Placeholder</span>
+              <div className="absolute inset-6 rounded-[32px] border-2 border-white/20" />
+              <div className="relative flex flex-col items-center justify-center gap-5 text-white transition-all duration-700 group-hover:scale-105">
+                <span className="font-serif text-[28vw] md:text-[150px] leading-none uppercase tracking-tight">GS</span>
+                <span className="text-xs font-normal uppercase tracking-[0.35em] text-white/70">Gita Subedi</span>
               </div>
-              <div className="absolute inset-0 bg-brand-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-brand-accent/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </motion.div>
             <div className="space-y-12">
               <p className="text-3xl md:text-4xl font-serif font-normal text-brand-text leading-tight">
@@ -180,6 +194,14 @@ export default function App() {
                   <h4 className="font-serif font-normal text-5xl text-brand-accent">50+</h4>
                   <p className="text-xs font-normal uppercase tracking-[0.2em] mt-2 opacity-50">Research Initiatives</p>
                 </div>
+              </div>
+              <div className="grid gap-3 border-t border-brand-text/10 pt-10" aria-label="Core expertise">
+                {DATA.focusAreas.map((area) => (
+                  <div key={area} className="flex items-start gap-3 text-brand-text/70">
+                    <BadgeCheck className="mt-1 h-5 w-5 shrink-0 text-brand-accent" aria-hidden="true" />
+                    <span className="text-base leading-relaxed">{area}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -206,18 +228,18 @@ export default function App() {
           />
           <div className="space-y-6">
             {DATA.articles.map((article, i) => (
-              <motion.a
+              <motion.article
                 key={i}
-                href={article.link}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="group flex flex-col md:flex-row md:items-center justify-between p-10 bg-white border-2 border-brand-text rounded-3xl hover:bg-brand-accent hover:text-white transition-all shadow-[8px_8px_0px_0px_#121212]"
               >
-                <div>
+                <div className="max-w-3xl">
                   <span className="text-[10px] font-normal uppercase tracking-[0.3em] opacity-40 mb-3 block group-hover:text-white/60">0{i + 1} - {article.date}</span>
                   <h3 className="text-3xl font-serif font-normal uppercase tracking-tight">{article.title}</h3>
+                  <p className="mt-4 text-base leading-relaxed text-brand-text/60 group-hover:text-white/80">{article.summary}</p>
                 </div>
                 <div className="mt-8 md:mt-0 flex items-center gap-4">
                    <span className="text-xs font-normal uppercase tracking-widest opacity-60">{article.readTime}</span>
@@ -225,7 +247,7 @@ export default function App() {
                       <ArrowRight className="-rotate-45" />
                    </div>
                 </div>
-              </motion.a>
+              </motion.article>
             ))}
           </div>
         </section>
@@ -291,7 +313,7 @@ export default function App() {
                    key={social.name}
                    href={social.href}
                    target={social.href === "#" ? undefined : "_blank"}
-                   rel={social.href === "#" ? undefined : "noreferrer"}
+                   rel={social.href === "#" ? undefined : "noopener noreferrer"}
                    onClick={(event) => {
                      if (social.href === "#") event.preventDefault();
                    }}

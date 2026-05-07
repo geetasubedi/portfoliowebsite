@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">GS monogram</title>
+  <desc id="desc">Gita Subedi portfolio logo</desc>
+  <rect width="64" height="64" rx="14" fill="#121212"/>
+  <path d="M9 55h46V9H9z" fill="none" stroke="#E63946" stroke-width="4"/>
+  <text x="32" y="39" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#F9F8F6" letter-spacing="-1">GS</text>
+</svg>
