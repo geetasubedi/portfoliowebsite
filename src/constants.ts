@@ -67,8 +67,9 @@ export const DATA = {
     },
   ],
   contact: {
-    email: "geetasubedi2020@gmail.com",
+    email: "get2gita@hotmail.com",
     linkedin: "https://www.linkedin.com/in/gita-subedi-36bb49a9/",
-    twitter: "@gitasubedi",
+    facebook: "#",
+    researchGate: "#",
   }
 };

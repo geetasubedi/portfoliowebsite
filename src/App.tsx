@@ -1,15 +1,5 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "motion/react";
+import { useState, useEffect } from "react";
+import { motion, useScroll, useSpring } from "motion/react";
 import { 
   MessageSquare, 
   Heart, 
@@ -17,13 +7,8 @@ import {
   PenTool, 
   Linkedin, 
   Mail, 
-  Twitter, 
   ArrowRight,
-  ExternalLink,
-  ChevronDown,
-  Monitor,
   Sparkles,
-  MousePointer2,
   Image
 } from "lucide-react";
 import { DATA } from "./constants";
@@ -58,7 +43,6 @@ const Header = () => {
     { name: "About", id: "about" },
     { name: "Services", id: "services" },
     { name: "Articles", id: "articles" },
-    { name: "Experiences", id: "experiences" },
     { name: "Contact", id: "contact", primary: true },
   ];
 
@@ -75,6 +59,12 @@ const Header = () => {
       </div>
 
       <nav className="flex items-center gap-2 md:gap-4">
+        <button
+          onClick={() => scrollTo("experiences")}
+          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-[10px] font-black uppercase tracking-widest shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+        >
+          Journey
+        </button>
         {navItems.map((item) => (
           <button
             key={item.id}
@@ -89,9 +79,6 @@ const Header = () => {
             {item.name}
           </button>
         ))}
-        <button className="md:hidden w-10 h-10 bg-brand-text text-white rounded-xl flex items-center justify-center shadow-[3px_3px_0px_0px_#E63946]">
-            <Sparkles size={18} />
-        </button>
       </nav>
     </header>
   );
@@ -134,8 +121,8 @@ export default function App() {
               transition={{ duration: 0.8, ease: "circOut" }}
               className="text-[15vw] lg:text-[180px] leading-[0.8] font-serif font-black uppercase tracking-tighter mb-8"
             >
-              {DATA.name.split(' ')[0]} <br/>
-              <span className="text-brand-accent">{DATA.name.split(' ')[1]}</span>
+              <span className="text-brand-accent">GITA</span> <br/>
+              <span className="text-brand-text">SUBEDI</span>
             </motion.h1>
 
             <motion.p
@@ -233,7 +220,7 @@ export default function App() {
                 className="group flex flex-col md:flex-row md:items-center justify-between p-10 bg-white border-2 border-brand-text rounded-3xl hover:bg-brand-accent hover:text-white transition-all shadow-[8px_8px_0px_0px_#121212]"
               >
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-3 block group-hover:text-white/60">0{i+1} — {article.date}</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-3 block group-hover:text-white/60">0{i + 1} - {article.date}</span>
                   <h3 className="text-3xl font-serif font-black uppercase tracking-tight">{article.title}</h3>
                 </div>
                 <div className="mt-8 md:mt-0 flex items-center gap-4">
@@ -289,19 +276,36 @@ export default function App() {
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               <a 
                 href={`mailto:${DATA.contact.email}`}
-                className="group relative inline-flex items-center gap-6 px-12 py-8 bg-brand-text text-white rounded-[32px] overflow-hidden transition-all shadow-[8px_8px_0px_0px_#E63946] active:shadow-none translate-y-0 active:translate-x-[4px] active:translate-y-[4px]"
+                className="group relative inline-flex max-w-full items-center gap-4 md:gap-6 px-6 md:px-12 py-6 md:py-8 bg-brand-text text-white rounded-[32px] overflow-hidden transition-all shadow-[8px_8px_0px_0px_#E63946] active:shadow-none translate-y-0 active:translate-x-[4px] active:translate-y-[4px]"
               >
-                <span className="text-2xl md:text-4xl font-serif font-black lowercase tracking-tight">{DATA.contact.email}</span>
+                <span className="min-w-0 break-all text-lg sm:text-2xl md:text-4xl font-serif font-black lowercase tracking-tight">{DATA.contact.email}</span>
                 <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-brand-accent transition-colors">
                   <Mail className="w-6 h-6" />
                 </div>
               </a>
             </div>
 
-            <div className="mt-16 flex items-center justify-center gap-12">
-               {['LinkedIn', 'Twitter', 'ResearchGate'].map((social) => (
-                 <a key={social} href="#" className="font-bold text-xs uppercase tracking-[0.3em] hover:text-brand-accent transition-colors border-b border-brand-text/20 pb-1">
-                   {social}
+            <div className="mt-16 flex flex-wrap items-center justify-center gap-4 md:gap-6">
+               {[
+                 { name: "LinkedIn", href: DATA.contact.linkedin, mark: "icon" },
+                 { name: "Facebook", href: DATA.contact.facebook, mark: "f" },
+                 { name: "ResearchGate", href: DATA.contact.researchGate, mark: "RG" },
+               ].map((social) => (
+                 <a
+                   key={social.name}
+                   href={social.href}
+                   target={social.href === "#" ? undefined : "_blank"}
+                   rel={social.href === "#" ? undefined : "noreferrer"}
+                   onClick={(event) => {
+                     if (social.href === "#") event.preventDefault();
+                   }}
+                   aria-label={social.name}
+                   className="group flex min-w-[160px] items-center gap-3 rounded-2xl border-2 border-brand-text bg-white px-5 py-4 text-left shadow-[4px_4px_0px_0px_#121212] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+                 >
+                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-text text-white group-hover:bg-white group-hover:text-brand-accent transition-colors">
+                     {social.mark === "icon" ? <Linkedin className="h-5 w-5" /> : <span className="text-sm font-black normal-case tracking-normal">{social.mark}</span>}
+                   </span>
+                   <span className="text-xs font-black uppercase tracking-[0.18em]">{social.name}</span>
                  </a>
                ))}
             </div>
@@ -310,9 +314,8 @@ export default function App() {
       </main>
 
       <footer className="py-12 px-12 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-text/40">
-        <p>© {new Date().getFullYear()} Gita Subedi Portfolio</p>
+        <p>&copy; {new Date().getFullYear()} Gita Subedi Portfolio</p>
         <p>Advocate for Education Policy Reform | Educational Practitioner for GEDSI</p>
-        <p>Curated by Antigravity</p>
       </footer>
     </div>
   );
