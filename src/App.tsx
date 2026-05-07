@@ -94,10 +94,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-brand-bg selection:bg-brand-accent selection:text-white font-sans text-brand-text overflow-x-hidden">
-      {/* Structural Decoration Grid Lines */}
-      <div className="fixed inset-0 border-x border-brand-text/5 mx-6 md:mx-12 pointer-events-none z-0"></div>
-      <div className="fixed inset-0 border-y border-brand-text/5 my-6 md:my-12 pointer-events-none z-0"></div>
-
       <Header />
 
       {/* Progress Bar */}
