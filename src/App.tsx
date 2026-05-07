@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, useScroll, useSpring } from "motion/react";
+import { useState, useEffect, type MouseEvent as ReactMouseEvent } from "react";
+import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { 
   MessageSquare, 
   Heart, 
@@ -12,6 +12,27 @@ import {
   BadgeCheck
 } from "lucide-react";
 import { DATA } from "./constants";
+import JourneyPage from "./JourneyPage";
+
+type AppRoute = "home" | "journey";
+
+const getCurrentRoute = (): AppRoute => {
+  if (typeof window !== "undefined" && window.location.pathname.toLowerCase() === "/journey") {
+    return "journey";
+  }
+
+  return "home";
+};
+
+const shouldUseBrowserNavigation = (event: ReactMouseEvent<HTMLAnchorElement>) =>
+  event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+
+const pageTransition = {
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -18 },
+  transition: { duration: 0.32, ease: "easeOut" },
+} as const;
 
 // Helper components
 const SectionTitle = ({ title, subtitle }: { title: string; subtitle?: string }) => (
@@ -38,7 +59,13 @@ const SectionTitle = ({ title, subtitle }: { title: string; subtitle?: string })
   </div>
 );
 
-const Header = () => {
+const Header = ({
+  activePage,
+  onNavigate,
+}: {
+  activePage: AppRoute;
+  onNavigate: (path: string, sectionId?: string) => void;
+}) => {
   const navItems = [
     { name: "About", id: "about" },
     { name: "Services", id: "services" },
@@ -47,16 +74,21 @@ const Header = () => {
     { name: "Contact", id: "contact", primary: true },
   ];
 
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+  const handleRouteClick = (
+    event: ReactMouseEvent<HTMLAnchorElement>,
+    path: string,
+    sectionId?: string,
+  ) => {
+    if (shouldUseBrowserNavigation(event)) return;
+    event.preventDefault();
+    onNavigate(path, sectionId);
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 h-20 md:h-24 px-6 md:px-12 flex items-center justify-between z-[100] bg-brand-bg/80 backdrop-blur-md border-b border-brand-text/10">
-      <button
-        type="button"
-        onClick={() => scrollTo("home")}
+      <a
+        href="/"
+        onClick={(event) => handleRouteClick(event, "/")}
         aria-label="Gita Subedi home"
         className="flex items-center space-x-3 group"
       >
@@ -64,21 +96,25 @@ const Header = () => {
           GS
         </span>
         <span className="font-serif font-normal uppercase tracking-tight text-lg hidden sm:inline">Gita Subedi</span>
-      </button>
+      </a>
 
       <nav className="flex items-center gap-2 md:gap-4" aria-label="Primary navigation">
-        <button
-          type="button"
-          onClick={() => scrollTo("experiences")}
-          className="flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent bg-brand-bg text-brand-accent text-xs md:text-sm font-normal uppercase tracking-wider shadow-[3px_3px_0px_0px_#E63946] transition-all hover:bg-brand-accent hover:text-white hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none"
+        <a
+          href="/Journey"
+          onClick={(event) => handleRouteClick(event, "/Journey")}
+          aria-current={activePage === "journey" ? "page" : undefined}
+          className={`
+            flex px-4 py-2 md:px-5 md:py-2.5 rounded-full border-2 border-brand-accent text-xs md:text-sm font-normal uppercase tracking-wider shadow-[3px_3px_0px_0px_#E63946] transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none
+            ${activePage === "journey" ? "bg-brand-accent text-white" : "bg-brand-bg text-brand-accent hover:bg-brand-accent hover:text-white"}
+          `}
         >
           Journey
-        </button>
+        </a>
         {navItems.map((item) => (
-          <button
-            type="button"
+          <a
+            href={`/#${item.id}`}
             key={item.id}
-            onClick={() => scrollTo(item.id)}
+            onClick={(event) => handleRouteClick(event, "/", item.id)}
             className={`
               hidden md:flex px-4 py-2 rounded-xl text-sm font-normal uppercase tracking-wider transition-all
               ${item.primary 
@@ -87,13 +123,14 @@ const Header = () => {
             `}
           >
             {item.name}
-          </button>
+          </a>
         ))}
       </nav>
     </header>
   );
 };
 export default function App() {
+  const [route, setRoute] = useState<AppRoute>(getCurrentRoute);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -101,9 +138,49 @@ export default function App() {
     restDelta: 0.001
   });
 
+  const navigateTo = (path: string, sectionId?: string) => {
+    const nextUrl = sectionId ? `${path}#${sectionId}` : path;
+    window.history.pushState({}, "", nextUrl);
+    setRoute(getCurrentRoute());
+
+    window.setTimeout(() => {
+      if (sectionId) {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 80);
+  };
+
+  useEffect(() => {
+    const handlePopState = () => setRoute(getCurrentRoute());
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const title = route === "journey" ? "Journey | Gita Subedi" : DATA.seo.title;
+    const url = route === "journey" ? `${DATA.seo.siteUrl}Journey` : DATA.seo.siteUrl;
+
+    document.title = title;
+    document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.setAttribute("href", url);
+    document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute("content", url);
+    document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute("content", title);
+    document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute("content", title);
+  }, [route]);
+
+  useEffect(() => {
+    if (route === "home" && window.location.hash) {
+      window.setTimeout(() => {
+        document.getElementById(window.location.hash.slice(1))?.scrollIntoView({ behavior: "smooth" });
+      }, 80);
+    }
+  }, [route]);
+
   return (
     <div className="min-h-screen bg-brand-bg selection:bg-brand-accent selection:text-white font-sans text-brand-text overflow-x-hidden">
-      <Header />
+      <Header activePage={route} onNavigate={navigateTo} />
 
       {/* Progress Bar */}
       <motion.div 
@@ -115,6 +192,13 @@ export default function App() {
         <CustomCursor />
       </div>
 
+      <AnimatePresence mode="wait" initial={false}>
+        {route === "journey" ? (
+          <motion.div key="journey" {...pageTransition}>
+            <JourneyPage />
+          </motion.div>
+        ) : (
+          <motion.div key="home" {...pageTransition}>
       <main id="main-content" className="max-w-6xl mx-auto px-6 relative z-10">
         {/* HERO SECTION */}
         <section id="home" aria-labelledby="hero-title" className="min-h-screen flex flex-col justify-center items-start pt-20 relative">
@@ -330,8 +414,11 @@ export default function App() {
           </div>
         </section>
       </main>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <footer className="py-8 px-6 md:px-12 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-normal uppercase tracking-[0.2em] text-brand-text/40">
+      <footer className="py-8 px-6 md:px-12 border-t border-brand-text/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-normal uppercase tracking-[0.2em] text-brand-text/40">
         <p>&copy; {new Date().getFullYear()} Gita Subedi Portfolio</p>
         <p>Advocate for Education Policy Reform | Educational Practitioner for GEDSI</p>
       </footer>

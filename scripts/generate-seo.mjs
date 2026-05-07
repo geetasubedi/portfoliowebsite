@@ -14,6 +14,10 @@ const rawSiteUrl =
 const siteUrl = rawSiteUrl.replace(/\/+$/, "");
 const publicDir = join(process.cwd(), "public");
 const today = new Date().toISOString().slice(0, 10);
+const routes = [
+  { path: "/", priority: "1.0" },
+  { path: "/Journey", priority: "0.9" },
+];
 
 mkdirSync(publicDir, { recursive: true });
 
@@ -24,5 +28,10 @@ writeFileSync(
 
 writeFileSync(
   join(publicDir, "sitemap.xml"),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${siteUrl}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n`,
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes
+    .map(
+      (route) =>
+        `  <url>\n    <loc>${siteUrl}${route.path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${route.priority}</priority>\n  </url>`,
+    )
+    .join("\n")}\n</urlset>\n`,
 );

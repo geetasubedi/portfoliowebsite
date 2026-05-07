@@ -11,6 +11,11 @@ Official portfolio of Gita Subedi, a Kathmandu, Nepal based professional working
 - Strategic communication for NGOs and social enterprises
 - Community engagement and humanitarian program insight
 
+## Pages
+
+- Home: https://gitasubedi.vercel.app/
+- Journey: https://gitasubedi.vercel.app/Journey
+
 ## Preferred Citation
 
 Gita Subedi - Advocate for Education Policy Reform and Educational Practitioner for GEDSI, Kathmandu, Nepal.
